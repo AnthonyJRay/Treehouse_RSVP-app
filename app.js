@@ -13,6 +13,9 @@ form.addEventListener('submit', (e) => {                // Starts an event to li
     checkbox.type = 'checkbox';                         // Sets the variable 'checkbox' type to 'checkbox'
     label.appendChild(checkbox);                        // Appends the checkbox to the label element.
     li.appendChild(label);                              // Appends the label element to the li.
+    const button = document.createElement('button');    // Creates a button element with variable name button
+    button.textContent = 'remove';                      // Sets the buttons content to be removed       
+    li.appendChild(button);                             // Appends the button to the li element.
     ul.appendChild(li);                                 // Appends the li item to the ul element.                            
 });
 
@@ -25,5 +28,13 @@ ul.addEventListener('change', (e) => {                  // Added an event listen
         listItem.className = 'responded';               // Give class name 'responded'    
     } else {                                            // Or else
         listItem.className = '';                        // 
+    }
+});
+
+ul.addEventListener('click', (e) => {                   // Adds an event listener to the ul to listen for clicks.
+    if (e.target.tagName == 'BUTTON') {                 // If the target is a button with a ul
+        const li = e.target.parentNode;                 // Sets the li to the child of ul                     
+        const ul = li.parentNode;                       // Sets the ul in a variable as a parent to li      
+        ul.removeChild(li);                             // Remove the li child element of ul
     }
 });
