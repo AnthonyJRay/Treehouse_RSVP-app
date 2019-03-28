@@ -1,6 +1,37 @@
 const form = document.getElementById('registrar');      // Assigning the form element to 'form' variable.
 const input = document.querySelector('input');          // Assigning the input to 'input' variable.
+const mainDiv = document.querySelector('.main');        // Assigns the div element with class '.main' to variable 'mainDiv'
 const ul = document.getElementById('invitedList');      // Stores the ul with id 'invitedList' to variable 'ul'
+
+const div = document.createElement('div');              // Creates a div element     
+const filterLabel = document.createElement('label');    // Creates a label element
+const filterCheckBox = document.createElement('input'); // Creates an input element
+
+filterLabel.textContent = "Hide those you haven't responded";   // Sets the text for label
+filterCheckBox.type = 'checkbox';                               // Sets the input type to 'checkbox
+div.appendChild(filterLabel);                                   // Appends the label as a child to the div
+div.appendChild(filterCheckBox);                                // Appends the checkbox as a child to the div below label.
+mainDiv.insertBefore(div, ul);                                  // Inserts the new div element before the ul in mainDiv.
+
+filterCheckBox.addEventListener('change', (e) => {              //
+    const isChecked = e.target.checked;                         //   Adds a checkbox to the page to filter those invitees,
+    const lis = ul.children;                                    //   who have confirmed their invitations or not.
+    if(isChecked) {                                             //
+        for (let i = 0; i < lis.length; i += 1) {               //   Loops through the invitees checking if responded
+            let li = lis[i];                                    //   or not.
+            if (li.className == 'responded') {                  //
+                li.style.display = '';                          //   If they have not been confirmed, filter them out with the
+            } else {                                            //   checkbox to hide those who haven't responded.
+               li.style.display = 'none';                       //
+            }                                                   //
+        }                                                       //
+    } else {                                                    //
+        for (let i = 0; i < lis.length; i += 1) {               //
+        let li = lis[i];                                        //
+        li.style.display = '';                                  //
+        }
+    }
+});                                                    
 
 function createLi(text) {
     const li = document.createElement('li');            // Creates a new 'li' item
@@ -51,6 +82,7 @@ ul.addEventListener('click', (e) => {                   // Adds an event listene
         const ul = li.parentNode;                       // Sets the ul in a variable as a parent to li  
         if (button.textContent == 'remove') {           // Added if content == remove to distinguish between edit and remove buttons.   
         ul.removeChild(li);                             // Remove the li child element of ul
+    
     } else if (button.textContent == 'edit') {          // Or else if the button content is equal to 'edit'
         const span = li.firstElementChild;              // Selects the span using the first child of li
         const input = document.createElement('input');  // Creates input element to replace span with
@@ -59,6 +91,7 @@ ul.addEventListener('click', (e) => {                   // Adds an event listene
         li.insertBefore(input, span);                   // Inserts the span element into the DOM, with input coming before.
         li.removeChild(span);                           // Removes the span to remove the text.
         button.textContent = 'save';                    // Changes the button text from 'Edit' to 'Save'
+    
     } else if (button.textContent == 'save') {          // -----------------------------------------
         const input = li.firstElementChild;             //
         const span = document.createElement('span');    //  Does the exact same as the code block above,
